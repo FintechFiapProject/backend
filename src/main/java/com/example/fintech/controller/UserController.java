@@ -1,5 +1,6 @@
 package com.example.fintech.controller;
 
+import com.example.fintech.dto.LoginDto;
 import com.example.fintech.model.User;
 import com.example.fintech.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -39,5 +40,10 @@ public class UserController {
     public ResponseEntity<Void> deletar(@PathVariable String id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("login")
+    public ResponseEntity<User> login(@RequestBody LoginDto loginDto) {
+
     }
 }
