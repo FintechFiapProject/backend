@@ -44,6 +44,6 @@ public class UserController {
 
     @PostMapping("login")
     public ResponseEntity<User> login(@RequestBody LoginDto loginDto) {
-
+        return this.service.login(loginDto.username, loginDto.password)
     }
 }
