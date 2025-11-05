@@ -2,6 +2,10 @@ package com.example.fintech.service;
 
 import com.example.fintech.model.User;
 import com.example.fintech.repository.UserRepository;
+import com.example.fintech.utils.CryptoUtils;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,7 +13,10 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
+
     private final UserRepository repository;
+
 
     public UserService(UserRepository userRepository) {
         this.repository = userRepository;
@@ -24,11 +31,40 @@ public class UserService {
     }
 
     public User save(User usuario) {
-        return repository.save(usuario);
+        try {
+            usuario.setPassword(CryptoUtils.encrypt(usuario.getPassword()));
+        } catch (Exception e) {
+            log.error("Error encrypting password: {}", e.getMessage());
+            throw new RuntimeException("Failed to encrypt password", e);
+        }
+        try {
+            return repository.save(usuario);
+        } catch (Exception e) {
+            log.error("Error saving user: {}", e.getMessage());
+            throw new RuntimeException("Failed to save user", e);
+        }
+
     }
 
     public void delete(String id) {
         repository.deleteById(id);
     }
 
+    public User login(String username, String password) {
+        try {
+            Optional<User> user = this.repository.findById(username);
+            if (user.isPresent()) {
+                if (user.get().getPassword().equals(CryptoUtils.encrypt(password))) {
+                    return user.get();
+                }
+
+                throw new RuntimeException("Invalid username or password");
+            }
+        } catch(Exception e) {
+            log.error("Error logging in user: {}", e.getMessage());
+            throw new RuntimeException("Failed to login user", e);
+        }
+
+        return null;
+    }
 }
