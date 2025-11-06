@@ -14,7 +14,7 @@ public class Meta {
     private Long id;
 
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
     private String title;
     private String description;
     private double progress;

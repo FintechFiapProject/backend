@@ -50,21 +50,19 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public User login(Long id, String username, String password) {
+    public User login(String email, String password) {
         try {
-            Optional<User> user = this.repository.findById(id);
-            if (user.isPresent()) {
-                if (user.get().getPassword().equals(CryptoUtils.encrypt(password))) {
-                    return user.get();
-                }
+            User user = this.repository.findByEmail(email);
 
-                throw new RuntimeException("Invalid username or password");
+            if (user.getPassword().equals(CryptoUtils.encrypt(password))) {
+                return user;
             }
+
+            throw new RuntimeException("Invalid password");
+
         } catch(Exception e) {
             log.error("Error logging in user: {}", e.getMessage());
             throw new RuntimeException("Failed to login user", e);
         }
-
-        return null;
     }
 }

@@ -14,7 +14,7 @@ public class RegistroGasto {
     private Long id;
 
     @Column(name = "user_id")
-    private String userId;
+    private Long userId;
     private int mes;
     private int ano;
 
