@@ -25,7 +25,7 @@ public class MetaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<? extends Object> buscarPorId(@PathVariable String id) {
+    public ResponseEntity<? extends Object> buscarPorId(@PathVariable Long id) {
         Optional<Meta> meta = service.find(id);
         return (meta != null) ? ResponseEntity.ok(meta) : ResponseEntity.notFound().build();
     }
@@ -37,13 +37,13 @@ public class MetaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Meta> atualizar(@PathVariable String id, @RequestBody Meta meta) {
+    public ResponseEntity<Meta> atualizar(@PathVariable Long id, @RequestBody Meta meta) {
         Meta atualizada = service.update(id, meta);
         return (atualizada != null) ? ResponseEntity.ok(atualizada) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable String id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         return ResponseEntity.noContent().build();
     }
 }

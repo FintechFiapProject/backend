@@ -30,20 +30,20 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> atualizar(@PathVariable String id, @RequestBody User usuario) {
+    public ResponseEntity<User> atualizar(@PathVariable Long id, @RequestBody User usuario) {
         usuario.setId(id);
         User atualizado = service.save(usuario);
         return ResponseEntity.ok(atualizado);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable String id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping("login/{id}")
-    public ResponseEntity<User> login(@PathVariable String id, @RequestBody LoginDto loginDto) {
+    public ResponseEntity<User> login(@PathVariable Long id, @RequestBody LoginDto loginDto) {
         User user = this.service.login(id, loginDto.username, loginDto.password);
         return ResponseEntity.ok(user);
     }

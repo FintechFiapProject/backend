@@ -7,7 +7,7 @@ import java.util.Base64;
 public class CryptoUtils {
 
     private static final String ALGORITHM = "AES";
-    private static final String SECRET_KEY = "f4f4s&l4l4us123";
+    private static final String SECRET_KEY = "f4f4s&l4l4us1232";
 
     public static String encrypt(String plainText) {
         try {

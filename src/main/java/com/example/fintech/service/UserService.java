@@ -26,7 +26,7 @@ public class UserService {
         return repository.findAll();
     }
 
-    public Optional<User> find(String id) {
+    public Optional<User> find(Long id) {
         return repository.findById(id);
     }
 
@@ -46,11 +46,11 @@ public class UserService {
 
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 
-    public User login(String id, String username, String password) {
+    public User login(Long id, String username, String password) {
         try {
             Optional<User> user = this.repository.findById(id);
             if (user.isPresent()) {

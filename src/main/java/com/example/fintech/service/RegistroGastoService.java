@@ -21,7 +21,7 @@ public class RegistroGastoService {
         return repository.findAll();
     }
 
-    public Optional<RegistroGasto> find(String id) {
+    public Optional<RegistroGasto> find(Long id) {
         return repository.findById(id);
     }
 
@@ -29,11 +29,11 @@ public class RegistroGastoService {
         return repository.save(registroGasto);
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 
-    public RegistroGasto update(String id, RegistroGasto novoGasto) {
+    public RegistroGasto update(Long id, RegistroGasto novoGasto) {
         Optional<RegistroGasto> gastoExistente = repository.findById(id);
         if (gastoExistente.isEmpty()) {
             throw new RuntimeException("RegistroGasto not found with id: " + id);

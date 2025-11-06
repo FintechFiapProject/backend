@@ -19,7 +19,7 @@ public class MetaService {
         return repository.findAll();
     }
 
-    public Optional<Meta> find(String id) {
+    public Optional<Meta> find(Long id) {
         return repository.findById(id);
     }
 
@@ -27,11 +27,11 @@ public class MetaService {
         return repository.save(meta);
     }
 
-    public void delete(String id) {
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 
-    public Meta update(String id, Meta novaMeta) {
+    public Meta update(Long id, Meta novaMeta) {
         Optional<Meta> metaExistente = repository.findById(id);
         if (metaExistente.isEmpty()) {
             throw new RuntimeException("Meta not found with id: " + id);

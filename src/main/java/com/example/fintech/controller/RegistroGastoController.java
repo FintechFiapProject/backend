@@ -25,7 +25,7 @@ public class RegistroGastoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<? extends Object> buscarPorId(@PathVariable String id) {
+    public ResponseEntity<? extends Object> buscarPorId(@PathVariable Long id) {
         Optional<RegistroGasto> registro = service.find(id);
         return (registro != null) ? ResponseEntity.ok(registro) : ResponseEntity.notFound().build();
     }
@@ -37,13 +37,13 @@ public class RegistroGastoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RegistroGasto> atualizar(@PathVariable String id, @RequestBody RegistroGasto registro) {
+    public ResponseEntity<RegistroGasto> atualizar(@PathVariable Long id, @RequestBody RegistroGasto registro) {
         RegistroGasto atualizado = service.update(id, registro);
         return (atualizado != null) ? ResponseEntity.ok(atualizado) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable String id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         return ResponseEntity.noContent().build();
     }
 }
