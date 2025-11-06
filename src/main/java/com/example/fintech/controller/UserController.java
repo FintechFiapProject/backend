@@ -42,9 +42,9 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("login")
-    public ResponseEntity<User> login(@RequestBody LoginDto loginDto) {
-        User user = this.service.login(loginDto.username, loginDto.password);
+    @PostMapping("login/{id}")
+    public ResponseEntity<User> login(@PathVariable String id, @RequestBody LoginDto loginDto) {
+        User user = this.service.login(id, loginDto.username, loginDto.password);
         return ResponseEntity.ok(user);
     }
 }

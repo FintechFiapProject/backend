@@ -50,9 +50,9 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public User login(String username, String password) {
+    public User login(String id, String username, String password) {
         try {
-            Optional<User> user = this.repository.findById(username);
+            Optional<User> user = this.repository.findById(id);
             if (user.isPresent()) {
                 if (user.get().getPassword().equals(CryptoUtils.encrypt(password))) {
                     return user.get();

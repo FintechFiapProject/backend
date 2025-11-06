@@ -32,4 +32,21 @@ public class RegistroGastoService {
     public void delete(String id) {
         repository.deleteById(id);
     }
+
+    public RegistroGasto update(String id, RegistroGasto novoGasto) {
+        Optional<RegistroGasto> gastoExistente = repository.findById(id);
+        if (gastoExistente.isEmpty()) {
+            throw new RuntimeException("RegistroGasto not found with id: " + id);
+        }
+
+        RegistroGasto gasto = gastoExistente.get();
+
+        // update allowed fields
+        gasto.setUserId(novoGasto.getUserId());
+        gasto.setMes(novoGasto.getMes());
+        gasto.setAno(novoGasto.getAno());
+        gasto.setReportUrl(novoGasto.getReportUrl());
+
+        return repository.save(gasto);
+    }
 }

@@ -30,4 +30,19 @@ public class MetaService {
     public void delete(String id) {
         repository.deleteById(id);
     }
+
+    public Meta update(String id, Meta novaMeta) {
+        Optional<Meta> metaExistente = repository.findById(id);
+        if (metaExistente.isEmpty()) {
+            throw new RuntimeException("Meta not found with id: " + id);
+        }
+
+        Meta meta = metaExistente.get();
+        meta.setUserId(novaMeta.getUserId());
+        meta.setDescription(novaMeta.getDescription());
+        meta.setProgress(novaMeta.getProgress());
+        meta.setTitle(novaMeta.getTitle());
+
+        return repository.save(meta);
+    }
 }

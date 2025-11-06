@@ -1,12 +1,13 @@
-package com.fintech.controller;
+package com.example.fintech.controller;
 
-import com.fintech.model.RegistroGasto;
-import com.fintech.service.RegistroGastoService;
+import com.example.fintech.model.RegistroGasto;
+import com.example.fintech.service.RegistroGastoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/registros")
@@ -20,33 +21,29 @@ public class RegistroGastoController {
 
     @GetMapping
     public ResponseEntity<List<RegistroGasto>> listar() {
-        return ResponseEntity.ok(service.listar());
+        return ResponseEntity.ok(service.list());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RegistroGasto> buscarPorId(@PathVariable Long id) {
-        RegistroGasto registro = service.buscarPorId(id);
+    public ResponseEntity<? extends Object> buscarPorId(@PathVariable String id) {
+        Optional<RegistroGasto> registro = service.find(id);
         return (registro != null) ? ResponseEntity.ok(registro) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
     public ResponseEntity<RegistroGasto> criar(@RequestBody RegistroGasto registro) {
-        RegistroGasto novo = service.salvar(registro);
+        RegistroGasto novo = service.save(registro);
         return ResponseEntity.status(HttpStatus.CREATED).body(novo);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RegistroGasto> atualizar(@PathVariable Long id, @RequestBody RegistroGasto registro) {
-        RegistroGasto atualizado = service.atualizar(id, registro);
+    public ResponseEntity<RegistroGasto> atualizar(@PathVariable String id, @RequestBody RegistroGasto registro) {
+        RegistroGasto atualizado = service.update(id, registro);
         return (atualizado != null) ? ResponseEntity.ok(atualizado) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        if (service.deletar(id)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> deletar(@PathVariable String id) {
+        return ResponseEntity.noContent().build();
     }
-
 }
